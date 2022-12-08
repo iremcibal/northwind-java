@@ -1,4 +1,4 @@
-package kodlama.io.northwind.business.dtos.response.product;
+package kodlama.io.northwind.business.dtos.response.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListProductResponse {
-    private String productName;
-    private double unitPrice;
+public class GetCategoryResponse {
+    private String categoryName;
+    private String description;
 }

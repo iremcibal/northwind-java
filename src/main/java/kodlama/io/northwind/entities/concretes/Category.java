@@ -18,14 +18,14 @@ import javax.persistence.*;
 public class Category {
     @Id
     @Column(name = "category_id")
-    private int category_id;
+    private int categoryId;
 
     @Column(name = "category_name")
-    private String category_name;
+    private String categoryName;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "picture")
-    private String picture;
+    private Byte[] picture;
 }

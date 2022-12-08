@@ -1,21 +1,26 @@
 package kodlama.io.northwind.entities.concretes;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
-@Table(name = "suppliers")
+@Table(name = "customers")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Supplier {
+public class Customer {
     @Id
-    @Column(name = "supplier_id")
-    private int supplierId;
+    @Column(name = "customer_id")
+    private String  customerId;
 
     @Column(name = "company_name")
     private String companyName;
@@ -46,7 +51,4 @@ public class Supplier {
 
     @Column(name = "fax")
     private String fax;
-
-
-
 }
