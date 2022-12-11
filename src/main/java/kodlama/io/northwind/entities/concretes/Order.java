@@ -17,7 +17,7 @@ import java.util.Date;
 public class Order {
     @Id
     @Column(name = "order_id")
-    private int orderId;
+    private int id;
 
     @Column(name = "order_date")
     private Date orderDate;
