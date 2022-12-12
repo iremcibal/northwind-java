@@ -4,6 +4,7 @@ import kodlama.io.northwind.business.abstracts.OrderDetailService;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.ListOrderDetailResponse;
+import kodlama.io.northwind.entities.dtos.OrderDetailDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,10 @@ public class OrderDetailController {
     @PostMapping("/addOrderDetail")
     public GetOrderDetailResponse add(@RequestBody CreateOrderDetailRequest createOrderDetailRequest){
         return service.addOrderDetail(createOrderDetailRequest);
+    }
+
+    @GetMapping("/getDTOByOrderId")
+    public List<OrderDetailDto> getByOrderId(@RequestParam("orderId")int orderId) {
+        return service.getByOrderId(orderId);
     }
 }

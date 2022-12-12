@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.employeeTerritories.ListEmpTe
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.EmployeeTerritoriesRepository;
 import kodlama.io.northwind.entities.concretes.EmployeeTerritories;
+import kodlama.io.northwind.entities.dtos.EmployeeTerritoryDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,10 @@ public class EmployeeTerritoriesManager implements EmployeeTerritoriesService {
         GetEmpTerriResponse response = modelMapperService.forResponse().map(savedEmpTerri,GetEmpTerriResponse.class);
 
         return response;
+    }
+
+    @Override
+    public List<EmployeeTerritoryDto> getByEmployerTerritoryId(int empTerriId) {
+        return repository.getByEmployerTerritoryId(empTerriId);
     }
 }

@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicRes
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.GetEmpTerriResponse;
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.ListEmpTerriResponse;
+import kodlama.io.northwind.entities.dtos.EmployeeTerritoryDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +27,10 @@ public class EmployeeTerritoriesController {
     @PostMapping("/addEmployeeTerritory")
     public GetEmpTerriResponse add(@RequestBody CreateEmpTerriRequest createEmpTerriRequest){
         return service.addEmpTerri(createEmpTerriRequest);
+    }
+
+    @GetMapping("getByEmployerTerritoryId")
+    public List<EmployeeTerritoryDto> getByEmployerTerritoryId(int empTerriId){
+        return service.getByEmployerTerritoryId(empTerriId);
     }
 }

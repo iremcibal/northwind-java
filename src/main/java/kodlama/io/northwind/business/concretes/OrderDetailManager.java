@@ -7,11 +7,13 @@ import kodlama.io.northwind.business.dtos.response.orderDetail.ListOrderDetailRe
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.OrderDetailRepository;
 import kodlama.io.northwind.entities.concretes.OrderDetail;
+import kodlama.io.northwind.entities.dtos.OrderDetailDto;
 import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +39,18 @@ public class OrderDetailManager implements OrderDetailService {
         GetOrderDetailResponse response = service.forResponse().map(savedDetail,GetOrderDetailResponse.class);
 
         return response;
+
+    }
+
+    @Override
+    public List<OrderDetailDto> getByOrderId(int orderId) {
+        /*List<OrderDetailDto> dtos = repository.findAllOrderById(orderId);
+        List<OrderDetailDto> responses = dtos.stream()
+                .map(orderDetailDto -> service.forResponse().map(orderDetailDto,OrderDetailDto.class))
+                .collect(Collectors.toList());
+
+        return responses;*/
+        return repository.findAllOrderById(orderId);
 
     }
 }

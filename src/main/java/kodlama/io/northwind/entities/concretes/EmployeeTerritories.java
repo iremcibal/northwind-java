@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class EmployeeTerritories {
     @Id
     @Column(name = "emp_terri_id")
-    private int employerTerritoryId;
+    private int employeeTerritoryId;
 
     @ManyToOne
     @JoinColumn(name="employee_id")
