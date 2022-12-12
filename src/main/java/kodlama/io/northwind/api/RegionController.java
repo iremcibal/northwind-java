@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicRes
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.region.GetRegionResponse;
 import kodlama.io.northwind.business.dtos.response.region.ListRegionResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,12 @@ public class RegionController {
     private RegionService service;
 
     @GetMapping("/getAll")
-    public List<ListRegionResponse> getAll(){
+    public DataResult<List<ListRegionResponse>> getAll(){
         return service.getAll();
     }
 
     @PostMapping("/addRegion")
-    public GetRegionResponse add(@RequestBody CreateRegionRequest createRegionRequest){
+    public DataResult<GetRegionResponse> add(@RequestBody CreateRegionRequest createRegionRequest){
         return service.addRegion(createRegionRequest);
     }
 }

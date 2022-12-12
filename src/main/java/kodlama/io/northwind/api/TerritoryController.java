@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.region.GetRegionResponse;
 import kodlama.io.northwind.business.dtos.response.region.ListRegionResponse;
 import kodlama.io.northwind.business.dtos.response.territory.GetTerritoryResponse;
 import kodlama.io.northwind.business.dtos.response.territory.ListTerritoryResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,12 @@ public class TerritoryController {
     private TerritoryService service;
 
     @GetMapping("/getAll")
-    public List<ListTerritoryResponse> getAll(){
+    public DataResult<List<ListTerritoryResponse>> getAll(){
         return service.getAll();
     }
 
     @PostMapping("/addTerritory")
-    public GetTerritoryResponse add(@RequestBody CreateTerritoryRequest createTerritoryRequest){
+    public DataResult<GetTerritoryResponse> add(@RequestBody CreateTerritoryRequest createTerritoryRequest){
         return service.addTerritory(createTerritoryRequest);
     }
 

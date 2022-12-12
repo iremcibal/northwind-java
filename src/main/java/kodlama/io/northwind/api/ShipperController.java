@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.order.GetOrderResponse;
 import kodlama.io.northwind.business.dtos.response.order.ListOrderResponse;
 import kodlama.io.northwind.business.dtos.response.shipper.GetShipperResponse;
 import kodlama.io.northwind.business.dtos.response.shipper.ListShipperResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,12 @@ public class ShipperController {
     private ShipperService shipperService;
 
     @GetMapping("/getAll")
-    public List<ListShipperResponse> getAll(){
+    public DataResult<List<ListShipperResponse>> getAll(){
         return shipperService.getAll();
     }
 
     @PostMapping("/addShipper")
-    public GetShipperResponse add(@RequestBody CreateShipperRequest createShipperRequest){
+    public DataResult<GetShipperResponse> add(@RequestBody CreateShipperRequest createShipperRequest){
         return shipperService.addShipper(createShipperRequest);
     }
 }

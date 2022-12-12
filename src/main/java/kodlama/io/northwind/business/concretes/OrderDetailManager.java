@@ -4,6 +4,8 @@ import kodlama.io.northwind.business.abstracts.OrderDetailService;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.ListOrderDetailResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.OrderDetailRepository;
 import kodlama.io.northwind.entities.concretes.OrderDetail;
@@ -23,34 +25,28 @@ public class OrderDetailManager implements OrderDetailService {
     private ModelMapperService service;
 
     @Override
-    public List<ListOrderDetailResponse> getAll() {
+    public DataResult<List<ListOrderDetailResponse>> getAll() {
         List<OrderDetail> orders = repository.findAll();
         List<ListOrderDetailResponse> responses = orders.stream()
                 .map(orderDetail -> service.forResponse().map(orderDetail,ListOrderDetailResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetOrderDetailResponse addOrderDetail(CreateOrderDetailRequest createOrderDetailRequest) {
+    public DataResult<GetOrderDetailResponse> addOrderDetail(CreateOrderDetailRequest createOrderDetailRequest) {
         OrderDetail detail = service.forRequest().map(createOrderDetailRequest,OrderDetail.class);
         OrderDetail savedDetail = repository.save(detail);
         GetOrderDetailResponse response = service.forResponse().map(savedDetail,GetOrderDetailResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
 
     }
 
     @Override
-    public List<OrderDetailDto> getByOrderId(int orderId) {
-        /*List<OrderDetailDto> dtos = repository.findAllOrderById(orderId);
-        List<OrderDetailDto> responses = dtos.stream()
-                .map(orderDetailDto -> service.forResponse().map(orderDetailDto,OrderDetailDto.class))
-                .collect(Collectors.toList());
-
-        return responses;*/
-        return repository.findAllOrderById(orderId);
-
+    public DataResult<List<OrderDetailDto>> getByOrderId(int orderId) {
+        List<OrderDetailDto> dto = repository.findAllOrderById(orderId);
+        return new SuccessDataResult<>(dto,"data listed");
     }
 }

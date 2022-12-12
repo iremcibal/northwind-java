@@ -4,6 +4,8 @@ import kodlama.io.northwind.business.abstracts.EmployeeService;
 import kodlama.io.northwind.business.dtos.request.employee.CreateEmployeeRequest;
 import kodlama.io.northwind.business.dtos.response.employee.GetEmployeeResponse;
 import kodlama.io.northwind.business.dtos.response.employee.ListEmployeeResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.EmployeeRepository;
 import kodlama.io.northwind.entities.concretes.Employee;
@@ -20,21 +22,21 @@ public class EmployeeManager implements EmployeeService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<ListEmployeeResponse> getAll() {
+    public DataResult<List<ListEmployeeResponse>> getAll() {
         List<Employee> employees = employeeRepository.findAll();
         List<ListEmployeeResponse> responses = employees.stream()
                 .map(employee -> modelMapperService.forResponse().map(employee,ListEmployeeResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetEmployeeResponse addEmployee(CreateEmployeeRequest createEmployeeRequest) {
+    public DataResult<GetEmployeeResponse> addEmployee(CreateEmployeeRequest createEmployeeRequest) {
         Employee employee = modelMapperService.forRequest().map(createEmployeeRequest,Employee.class);
         Employee savedEmployee = employeeRepository.save(employee);
         GetEmployeeResponse response = modelMapperService.forResponse().map(savedEmployee,GetEmployeeResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
     }
 }

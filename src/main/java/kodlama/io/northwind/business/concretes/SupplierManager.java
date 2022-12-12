@@ -5,6 +5,8 @@ import kodlama.io.northwind.business.dtos.request.supplier.CreateSupplierRequest
 import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
 import kodlama.io.northwind.business.dtos.response.supplier.GetSupplierResponse;
 import kodlama.io.northwind.business.dtos.response.supplier.ListSupplierResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.SupplierRepository;
 import kodlama.io.northwind.entities.concretes.Supplier;
@@ -22,29 +24,29 @@ public class SupplierManager implements SupplierService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<ListSupplierResponse> getAll() {
+    public DataResult<List<ListSupplierResponse>> getAll() {
         List<Supplier> suppliers = supplierRepository.findAll();
         List<ListSupplierResponse> responses = suppliers.stream()
                 .map(supplier -> modelMapperService.forResponse().map(supplier,ListSupplierResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetSupplierResponse getById(int id) {
+    public DataResult<GetSupplierResponse> getById(int id) {
         Supplier supplier = supplierRepository.findById(id).orElseThrow();
         GetSupplierResponse response = modelMapperService.forResponse().map(supplier,GetSupplierResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data listed");
     }
 
     @Override
-    public GetSupplierResponse addSupplier(CreateSupplierRequest createSupplierRequest) {
+    public DataResult<GetSupplierResponse> addSupplier(CreateSupplierRequest createSupplierRequest) {
         Supplier supplier = modelMapperService.forRequest().map(createSupplierRequest,Supplier.class);
         Supplier savedSupplier = supplierRepository.save(supplier);
         GetSupplierResponse response = modelMapperService.forResponse().map(savedSupplier,GetSupplierResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
     }
 }

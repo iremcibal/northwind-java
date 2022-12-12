@@ -4,6 +4,8 @@ import kodlama.io.northwind.business.abstracts.DemographicService;
 import kodlama.io.northwind.business.dtos.request.demographic.CreateDemographicRequest;
 import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.DemographicRepository;
 import kodlama.io.northwind.entities.concretes.Demographic;
@@ -21,21 +23,21 @@ public class DemographicManager implements DemographicService {
 
 
     @Override
-    public List<ListDemographicResponse> getAll() {
+    public DataResult<List<ListDemographicResponse>> getAll() {
         List<Demographic> demographics = demographicRepository.findAll();
         List<ListDemographicResponse> responses = demographics.stream()
                 .map(demographic -> modelMapperService.forResponse().map(demographic,ListDemographicResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetDemographicResponse addDemographic(CreateDemographicRequest createDemographicRequest) {
+    public DataResult<GetDemographicResponse> addDemographic(CreateDemographicRequest createDemographicRequest) {
         Demographic demographic = modelMapperService.forRequest().map(createDemographicRequest,Demographic.class);
         Demographic savedDemographic = demographicRepository.save(demographic);
         GetDemographicResponse response = modelMapperService.forResponse().map(savedDemographic,GetDemographicResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
     }
 }

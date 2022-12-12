@@ -6,10 +6,11 @@ import kodlama.io.northwind.business.dtos.response.customer.GetCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.customer.ListCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.customerDemographic.GetCustDemoResponse;
 import kodlama.io.northwind.business.dtos.response.customerDemographic.ListCustDemoResponse;
+import kodlama.io.northwind.core.results.DataResult;
 
 import java.util.List;
 
 public interface CustomerDemographicService {
-    List<ListCustDemoResponse> getAll();
-    GetCustDemoResponse addCustDemo(CreateCustDemoRequest createCustDemoRequest);
+    DataResult<List<ListCustDemoResponse>> getAll();
+    DataResult<GetCustDemoResponse> addCustDemo(CreateCustDemoRequest createCustDemoRequest);
 }

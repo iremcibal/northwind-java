@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.customer.GetCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.customer.ListCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.employee.GetEmployeeResponse;
 import kodlama.io.northwind.business.dtos.response.employee.ListEmployeeResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,12 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/getAll")
-    public List<ListEmployeeResponse> getAll(){
+    public DataResult<List<ListEmployeeResponse>> getAll(){
         return employeeService.getAll();
     }
 
     @PostMapping("/addEmployee")
-    public GetEmployeeResponse add(@RequestBody CreateEmployeeRequest createEmployeeRequest){
+    public DataResult<GetEmployeeResponse> add(@RequestBody CreateEmployeeRequest createEmployeeRequest){
         return employeeService.addEmployee(createEmployeeRequest);
     }
 

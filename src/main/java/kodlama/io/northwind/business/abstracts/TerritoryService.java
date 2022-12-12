@@ -3,10 +3,11 @@ package kodlama.io.northwind.business.abstracts;
 import kodlama.io.northwind.business.dtos.request.territory.CreateTerritoryRequest;
 import kodlama.io.northwind.business.dtos.response.territory.GetTerritoryResponse;
 import kodlama.io.northwind.business.dtos.response.territory.ListTerritoryResponse;
+import kodlama.io.northwind.core.results.DataResult;
 
 import java.util.List;
 
 public interface TerritoryService {
-    List<ListTerritoryResponse> getAll();
-    GetTerritoryResponse addTerritory(CreateTerritoryRequest createTerritoryRequest);
+    DataResult<List<ListTerritoryResponse>> getAll();
+    DataResult<GetTerritoryResponse> addTerritory(CreateTerritoryRequest createTerritoryRequest);
 }

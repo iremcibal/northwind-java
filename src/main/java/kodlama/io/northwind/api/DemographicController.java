@@ -7,6 +7,7 @@ import kodlama.io.northwind.business.dtos.response.customerDemographic.GetCustDe
 import kodlama.io.northwind.business.dtos.response.customerDemographic.ListCustDemoResponse;
 import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.entities.concretes.Demographic;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class DemographicController {
     private DemographicService service;
 
     @GetMapping("/getAll")
-    public List<ListDemographicResponse> getAll(){
+    public DataResult<List<ListDemographicResponse>> getAll(){
         return service.getAll();
     }
 
     @PostMapping("/addDemographic")
-    public GetDemographicResponse add(@RequestBody CreateDemographicRequest createDemographicRequest){
+    public DataResult<GetDemographicResponse> add(@RequestBody CreateDemographicRequest createDemographicRequest){
         return service.addDemographic(createDemographicRequest);
     }
 }

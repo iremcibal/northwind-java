@@ -6,6 +6,7 @@ import kodlama.io.northwind.business.dtos.request.usState.CreateUsStateRequest;
 import kodlama.io.northwind.business.dtos.response.customerDemographic.GetCustDemoResponse;
 import kodlama.io.northwind.business.dtos.response.usState.GetUsStateResponse;
 import kodlama.io.northwind.business.dtos.response.usState.ListUsStateResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +19,12 @@ public class UsStateController {
     private UsStateService service;
 
     @GetMapping("/getAll")
-    public List<ListUsStateResponse> getAll(){
+    public DataResult<List<ListUsStateResponse>> getAll(){
         return service.getAll();
     }
 
     @PostMapping("/addUsState")
-    public GetUsStateResponse add(@RequestBody CreateUsStateRequest createUsStateRequest){
+    public DataResult<GetUsStateResponse> add(@RequestBody CreateUsStateRequest createUsStateRequest){
         return service.addUsState(createUsStateRequest);
     }
 }

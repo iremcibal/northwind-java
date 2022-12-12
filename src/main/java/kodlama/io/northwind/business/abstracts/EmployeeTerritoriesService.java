@@ -6,12 +6,13 @@ import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicRes
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.GetEmpTerriResponse;
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.ListEmpTerriResponse;
+import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.entities.dtos.EmployeeTerritoryDto;
 
 import java.util.List;
 
 public interface EmployeeTerritoriesService {
-    List<ListEmpTerriResponse> getAll();
-    GetEmpTerriResponse addEmpTerri(CreateEmpTerriRequest createEmpTerriRequest);
-    List<EmployeeTerritoryDto> getByEmployerTerritoryId(int empTerriId);
+    DataResult<List<ListEmpTerriResponse>> getAll();
+    DataResult<GetEmpTerriResponse> addEmpTerri(CreateEmpTerriRequest createEmpTerriRequest);
+    DataResult<List<EmployeeTerritoryDto>> getByEmployerTerritoryId(int empTerriId);
 }

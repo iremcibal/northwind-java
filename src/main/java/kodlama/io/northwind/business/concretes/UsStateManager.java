@@ -4,6 +4,8 @@ import kodlama.io.northwind.business.abstracts.UsStateService;
 import kodlama.io.northwind.business.dtos.request.usState.CreateUsStateRequest;
 import kodlama.io.northwind.business.dtos.response.usState.GetUsStateResponse;
 import kodlama.io.northwind.business.dtos.response.usState.ListUsStateResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.UsStateRepository;
 import kodlama.io.northwind.entities.concretes.UsState;
@@ -20,21 +22,21 @@ public class UsStateManager implements UsStateService {
     private ModelMapperService service;
 
     @Override
-    public List<ListUsStateResponse> getAll() {
+    public DataResult<List<ListUsStateResponse>> getAll() {
         List<UsState> states = repository.findAll();
         List<ListUsStateResponse> responses = states.stream()
                 .map(usState -> service.forResponse().map(usState,ListUsStateResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetUsStateResponse addUsState(CreateUsStateRequest createUsStateRequest) {
+    public DataResult<GetUsStateResponse> addUsState(CreateUsStateRequest createUsStateRequest) {
         UsState state = service.forRequest().map(createUsStateRequest,UsState.class);
         UsState savedState = repository.save(state);
         GetUsStateResponse response = service.forResponse().map(savedState,GetUsStateResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
     }
 }

@@ -4,6 +4,8 @@ import kodlama.io.northwind.business.abstracts.OrderService;
 import kodlama.io.northwind.business.dtos.request.order.CreateOrderRequest;
 import kodlama.io.northwind.business.dtos.response.order.GetOrderResponse;
 import kodlama.io.northwind.business.dtos.response.order.ListOrderResponse;
+import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.OrderRepository;
 import kodlama.io.northwind.entities.concretes.Order;
@@ -20,21 +22,21 @@ public class OrderManager implements OrderService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<ListOrderResponse> getAll() {
+    public DataResult<List<ListOrderResponse>> getAll() {
         List<Order> orders = orderRepository.findAll();
         List<ListOrderResponse> responses = orders.stream()
                 .map(order -> modelMapperService.forResponse().map(order,ListOrderResponse.class))
                 .collect(Collectors.toList());
 
-        return responses;
+        return new SuccessDataResult<>(responses,"data listed");
     }
 
     @Override
-    public GetOrderResponse addOrder(CreateOrderRequest createOrderRequest) {
+    public DataResult<GetOrderResponse> addOrder(CreateOrderRequest createOrderRequest) {
         Order order =modelMapperService.forRequest().map(createOrderRequest,Order.class);
         Order savedOrder = orderRepository.save(order);
         GetOrderResponse response = modelMapperService.forResponse().map(savedOrder,GetOrderResponse.class);
 
-        return response;
+        return new SuccessDataResult<>(response,"data added");
     }
 }
