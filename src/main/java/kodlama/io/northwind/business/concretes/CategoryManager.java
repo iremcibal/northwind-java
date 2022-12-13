@@ -1,6 +1,7 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.CategoryService;
+import kodlama.io.northwind.business.businessRules.CategoryBusinessRules;
 import kodlama.io.northwind.business.dtos.request.category.CreateCategoryRequest;
 import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
 import kodlama.io.northwind.business.dtos.response.category.ListCategoryResponse;
@@ -19,9 +20,12 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CategoryManager implements CategoryService {
-
+    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
     private ModelMapperService modelMapperService;
+    @Autowired
+    private CategoryBusinessRules rules;
 
     @Override
     public DataResult<List<ListCategoryResponse>> getAll() {
@@ -44,6 +48,7 @@ public class CategoryManager implements CategoryService {
     @Override
     public DataResult<GetCategoryResponse> addCategory(CreateCategoryRequest createCategoryRequest) {
         Category category = modelMapperService.forRequest().map(createCategoryRequest,Category.class);
+        rules.CategoryExistsWithSameName(createCategoryRequest.getCategoryName());
         Category savedCategory = categoryRepository.save(category);
         GetCategoryResponse response = modelMapperService.forResponse().map(savedCategory,GetCategoryResponse.class);
 
