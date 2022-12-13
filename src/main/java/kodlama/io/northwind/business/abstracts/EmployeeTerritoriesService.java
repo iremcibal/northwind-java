@@ -14,5 +14,5 @@ import java.util.List;
 public interface EmployeeTerritoriesService {
     DataResult<List<ListEmpTerriResponse>> getAll();
     DataResult<GetEmpTerriResponse> addEmpTerri(CreateEmpTerriRequest createEmpTerriRequest);
-    DataResult<List<EmployeeTerritoryDto>> getByEmployerTerritoryId(int empTerriId);
+    DataResult<List<ListEmpTerriResponse>> getByEmployerTerritoryId(int empTerriId);
 }

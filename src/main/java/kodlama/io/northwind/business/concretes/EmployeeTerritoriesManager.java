@@ -42,8 +42,8 @@ public class EmployeeTerritoriesManager implements EmployeeTerritoriesService {
     }
 
     @Override
-    public DataResult<List<EmployeeTerritoryDto>> getByEmployerTerritoryId(int empTerriId) {
-        List<EmployeeTerritoryDto> dto = repository.getByEmployerTerritoryId(empTerriId);
+    public DataResult<List<ListEmpTerriResponse>> getByEmployerTerritoryId(int empTerriId) {
+        List<ListEmpTerriResponse> dto = repository.getByEmployerTerritoryId(empTerriId);
         return new SuccessDataResult<>(dto,"data listed");
     }
 }

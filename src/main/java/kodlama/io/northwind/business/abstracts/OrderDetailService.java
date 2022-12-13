@@ -11,5 +11,5 @@ import java.util.List;
 public interface OrderDetailService {
     DataResult<List<ListOrderDetailResponse>> getAll();
     DataResult<GetOrderDetailResponse> addOrderDetail(CreateOrderDetailRequest createOrderDetailRequest);
-    DataResult<List<OrderDetailDto>> getByOrderId(int orderId);
+    DataResult<List<ListOrderDetailResponse>> getByOrderId(int orderId);
 }

@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListEmpTerriResponse {
-    private int employerTerritoryId;
-    private int employeeId;
-    private String territoryId;
+    private int employeeTerritoryId;
+    private String firstName;
+    private String lastName;
+    private String territoryDescription;
 }

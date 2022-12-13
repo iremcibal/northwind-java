@@ -14,6 +14,6 @@ public class ListOrderDetailResponse {
     private double  unitPrice;
     private int quantity;
     private double discount;
-    private int productId;
+    private String productName;
     private int orderId;
 }

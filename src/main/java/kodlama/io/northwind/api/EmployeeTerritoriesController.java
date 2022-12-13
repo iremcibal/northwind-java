@@ -31,7 +31,7 @@ public class EmployeeTerritoriesController {
     }
 
     @GetMapping("getByEmployerTerritoryId")
-    public DataResult<List<EmployeeTerritoryDto>> getByEmployerTerritoryId(int empTerriId){
+    public DataResult<List<ListEmpTerriResponse>> getByEmployerTerritoryId(int empTerriId){
         return service.getByEmployerTerritoryId(empTerriId);
     }
 }

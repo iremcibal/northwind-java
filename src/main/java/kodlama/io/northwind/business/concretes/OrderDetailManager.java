@@ -45,8 +45,8 @@ public class OrderDetailManager implements OrderDetailService {
     }
 
     @Override
-    public DataResult<List<OrderDetailDto>> getByOrderId(int orderId) {
-        List<OrderDetailDto> dto = repository.findAllOrderById(orderId);
+    public DataResult<List<ListOrderDetailResponse>> getByOrderId(int orderId) {
+        List<ListOrderDetailResponse> dto = repository.findAllOrderById(orderId);
         return new SuccessDataResult<>(dto,"data listed");
     }
 }

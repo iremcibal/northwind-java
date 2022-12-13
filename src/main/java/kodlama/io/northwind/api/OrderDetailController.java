@@ -28,7 +28,7 @@ public class OrderDetailController {
     }
 
     @GetMapping("/getDTOByOrderId")
-    public DataResult<List<OrderDetailDto>> getByOrderId(@RequestParam("orderId")int orderId) {
+    public DataResult<List<ListOrderDetailResponse>> getByOrderId(@RequestParam("orderId")int orderId) {
         return service.getByOrderId(orderId);
     }
 }
