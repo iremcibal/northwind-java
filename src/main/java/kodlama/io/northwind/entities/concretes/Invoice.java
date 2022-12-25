@@ -29,3 +29,4 @@ public class Invoice {
     @JoinColumn(name="orderdetails_id",referencedColumnName = "order_detail_id")
     private OrderDetail orderDetail;
 }
+
