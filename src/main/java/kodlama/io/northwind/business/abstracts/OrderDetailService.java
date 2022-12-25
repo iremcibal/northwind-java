@@ -4,7 +4,6 @@ import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailR
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.ListOrderDetailResponse;
 import kodlama.io.northwind.core.results.DataResult;
-import kodlama.io.northwind.entities.dtos.OrderDetailDto;
 
 import java.util.List;
 

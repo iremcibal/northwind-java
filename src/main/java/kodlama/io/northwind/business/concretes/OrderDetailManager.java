@@ -9,7 +9,6 @@ import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.OrderDetailRepository;
 import kodlama.io.northwind.entities.concretes.OrderDetail;
-import kodlama.io.northwind.entities.dtos.OrderDetailDto;
 import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package kodlama.io.northwind.dataAccess.abstracts;
 
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.ListEmpTerriResponse;
 import kodlama.io.northwind.entities.concretes.EmployeeTerritories;
-import kodlama.io.northwind.entities.dtos.EmployeeTerritoryDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

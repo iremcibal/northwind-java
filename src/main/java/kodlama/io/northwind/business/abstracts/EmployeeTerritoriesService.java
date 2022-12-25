@@ -7,7 +7,6 @@ import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicRe
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.GetEmpTerriResponse;
 import kodlama.io.northwind.business.dtos.response.employeeTerritories.ListEmpTerriResponse;
 import kodlama.io.northwind.core.results.DataResult;
-import kodlama.io.northwind.entities.dtos.EmployeeTerritoryDto;
 
 import java.util.List;
 
