@@ -4,15 +4,18 @@ import kodlama.io.northwind.business.abstracts.CustomerService;
 import kodlama.io.northwind.business.dtos.request.customer.CreateCustomerRequest;
 import kodlama.io.northwind.business.dtos.response.customer.GetCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.customer.ListCustomerResponse;
+import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.CustomerRepository;
 import kodlama.io.northwind.entities.concretes.Customer;
+import kodlama.io.northwind.entities.concretes.OrderDetail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,5 +41,19 @@ public class CustomerManager implements CustomerService {
         GetCustomerResponse response = modelMapperService.forResponse().map(savedCustomer,GetCustomerResponse.class);
 
         return new SuccessDataResult<>(response,"data added");
+    }
+
+    @Override
+    public DataResult<GetCustomerResponse> getById(String id) {
+        Customer detail = customerRepository.getCustomerByCustomerId(id);
+        GetCustomerResponse response = modelMapperService.forResponse().map(detail,GetCustomerResponse.class);
+
+        return new SuccessDataResult<>(response,"data listed");
+    }
+
+    @Override
+    public DataResult<Customer> getByCustomerId(String id) {
+        Customer customer = customerRepository.getCustomerByCustomerId(id);
+        return new SuccessDataResult<>(customer,"data listed");
     }
 }

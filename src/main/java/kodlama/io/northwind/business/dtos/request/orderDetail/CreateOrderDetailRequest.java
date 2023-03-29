@@ -1,16 +1,16 @@
 package kodlama.io.northwind.business.dtos.request.orderDetail;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import kodlama.io.northwind.entities.concretes.Order;
+import kodlama.io.northwind.entities.concretes.Product;
+import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderDetailRequest {
-    private int orderDetailId;
+    private int id;
     private double  unitPrice;
     private int quantity;
     private double discount;

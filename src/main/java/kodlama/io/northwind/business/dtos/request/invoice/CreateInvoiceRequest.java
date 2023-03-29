@@ -1,11 +1,10 @@
 package kodlama.io.northwind.business.dtos.request.invoice;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.util.Date;
+import kodlama.io.northwind.entities.concretes.OrderDetail;
+import lombok.*;
 
+import java.util.Date;
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

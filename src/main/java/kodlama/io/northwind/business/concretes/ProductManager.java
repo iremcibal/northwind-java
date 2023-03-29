@@ -14,6 +14,7 @@ import kodlama.io.northwind.entities.concretes.Category;
 import kodlama.io.northwind.entities.concretes.Product;
 import kodlama.io.northwind.entities.concretes.Supplier;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,18 @@ public class ProductManager implements ProductService {
         GetProductResponse response = modelMapperService.forResponse().map(product,GetProductResponse.class);
 
         return new SuccessDataResult<>(response,"data listed");
+    }
+
+    @Override
+    public DataResult<Product> getByProductIdData(int id) {
+        Product product = productRepository.getByProductId(id);
+        return new SuccessDataResult<>(product,"data listed");
+    }
+
+    @Override
+    public Product getByProductId(int id) {
+        Product product = productRepository.getByProductId(id);
+        return product;
     }
 
     @Override

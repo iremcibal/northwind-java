@@ -31,6 +31,6 @@ public class InvoiceController {
 
     @PostMapping("/addInvoice")
     public DataResult<GetInvoiceResponse> add(@RequestBody CreateInvoiceRequest createInvoiceRequest){
-        return invoiceService.addInvoice(createInvoiceRequest);
+        return invoiceService.addInvoiceRes(createInvoiceRequest);
     }
 }

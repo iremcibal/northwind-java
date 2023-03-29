@@ -1,12 +1,10 @@
 package kodlama.io.northwind.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -15,8 +13,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class OrderDetail {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_detail_id")
-    private int orderDetailId;
+    private int id;
 
     @Column(name = "unit_price")
     private double  unitPrice;

@@ -12,6 +12,8 @@ import java.util.List;
 public interface ProductService {
     DataResult<List<ListProductResponse>> getAll();
     DataResult<GetProductResponse> getById(int id);
+    DataResult<Product> getByProductIdData(int id);
+    Product getByProductId(int id);
     //repositoryde jpa metotları dışında metot oluşturuluyor!!
     DataResult<List<ListProductResponse>> getAllByUnitsInStockGreaterThan(int stock);
     DataResult<GetProductResponse> getByProductName(String name);

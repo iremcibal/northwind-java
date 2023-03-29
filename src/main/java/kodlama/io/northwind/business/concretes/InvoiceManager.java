@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,11 +41,23 @@ public class InvoiceManager implements InvoiceService {
     }
 
     @Override
-    public DataResult<GetInvoiceResponse> addInvoice(CreateInvoiceRequest createInvoiceRequest) {
+    public DataResult<Invoice> getByInvoiceId(int id) {
+        Invoice invoice = repository.getByInvoiceId(id);
+        return new SuccessDataResult<Invoice>(invoice,"data listed");
+    }
+
+    @Override
+    public DataResult<GetInvoiceResponse> addInvoiceRes(CreateInvoiceRequest createInvoiceRequest) {
         Invoice invoice = modelMapperServices.forRequest().map(createInvoiceRequest,Invoice.class);
         Invoice savedInvoice = repository.save(invoice);
         GetInvoiceResponse response = modelMapperServices.forResponse().map(savedInvoice,GetInvoiceResponse.class);
 
         return new SuccessDataResult<>(response,"data added");
+    }
+
+    @Override
+    public DataResult<Invoice> addInvoice(Invoice invoice) {
+        Invoice savedInvoice = repository.save(invoice);
+        return new SuccessDataResult<>(savedInvoice,"data added");
     }
 }

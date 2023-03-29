@@ -1,16 +1,16 @@
 package kodlama.io.northwind.business.dtos.response.order;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import kodlama.io.northwind.entities.concretes.Order;
+import lombok.*;
 
 import java.util.Date;
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetOrderResponse {
+    private int orderId;
     private Date orderDate;
     private Date requiredDate;
     private Date shippedDate;

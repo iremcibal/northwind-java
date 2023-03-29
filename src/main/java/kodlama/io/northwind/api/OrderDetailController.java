@@ -23,7 +23,7 @@ public class OrderDetailController {
 
     @PostMapping("/addOrderDetail")
     public DataResult<GetOrderDetailResponse> add(@RequestBody CreateOrderDetailRequest createOrderDetailRequest){
-        return service.addOrderDetail(createOrderDetailRequest);
+        return service.addOrderDetailRes(createOrderDetailRequest);
     }
 
     @GetMapping("/getDTOByOrderId")
