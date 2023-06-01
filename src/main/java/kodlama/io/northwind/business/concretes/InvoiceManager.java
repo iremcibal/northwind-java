@@ -2,13 +2,17 @@ package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.InvoiceService;
 import kodlama.io.northwind.business.dtos.request.invoice.CreateInvoiceRequest;
+import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
 import kodlama.io.northwind.business.dtos.response.invoice.GetInvoiceResponse;
 import kodlama.io.northwind.business.dtos.response.invoice.ListInvoiceResponse;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.InvoiceRepository;
 import kodlama.io.northwind.entities.concretes.Invoice;
+import kodlama.io.northwind.entities.concretes.OrderDetail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +24,19 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InvoiceManager implements InvoiceService {
     private InvoiceRepository repository;
-    private ModelMapperService modelMapperServices;
+    private ModelMapperService modelMapperService;
 
     @Override
+    public Result addRange(int orderDetailId, CreateInvoiceRequest createInvoiceRequest) {
+        createInvoiceRequest.setOrderDetailId(orderDetailId);
+        Invoice invoice = modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
+        invoice.setInvoiceId(orderDetailId);
+        repository.save(invoice);
+
+        return new SuccessResult();
+    }
+
+    /*@Override
     public DataResult<List<ListInvoiceResponse>> getAll() {
         List<Invoice> invoices = repository.findAll();
         List<ListInvoiceResponse> responses = invoices.stream()
@@ -59,5 +73,5 @@ public class InvoiceManager implements InvoiceService {
     public DataResult<Invoice> addInvoice(Invoice invoice) {
         Invoice savedInvoice = repository.save(invoice);
         return new SuccessDataResult<>(savedInvoice,"data added");
-    }
+    }*/
 }

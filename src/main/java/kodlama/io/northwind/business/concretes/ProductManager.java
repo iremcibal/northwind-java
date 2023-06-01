@@ -3,6 +3,7 @@ package kodlama.io.northwind.business.concretes;
 import kodlama.io.northwind.business.abstracts.CategoryService;
 import kodlama.io.northwind.business.abstracts.ProductService;
 import kodlama.io.northwind.business.abstracts.SupplierService;
+import kodlama.io.northwind.business.businessRules.ProductBusinessRules;
 import kodlama.io.northwind.business.dtos.request.product.CreateProductRequest;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
@@ -26,9 +27,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductManager implements ProductService {
     private ProductRepository productRepository;
-    private CategoryService categoryService;
-    private SupplierService supplierService;
     private ModelMapperService modelMapperService;
+    private ProductBusinessRules productBusinessRules;
 
     @Override
     public DataResult<List<ListProductResponse>> getAll() {
@@ -85,14 +85,9 @@ public class ProductManager implements ProductService {
         product.setUnitPrice(createProductRequest.getUnit_price());
         product.setUnitsInStock(createProductRequest.getUnits_in_stock());*/
 
-        /*Category category = categoryService.getById(createProductRequest.getCategory_id());
-        product.setCategory(category);
-        Supplier supplier = supplierService.getById(createProductRequest.getSupplier_id());
-        product.setSupplier(supplier);*/
 
         Product savedProduct = productRepository.save(product);
 
-//        GetProductResponse response = new GetProductResponse(savedProduct.getProductName(),savedProduct.getUnitPrice());
         GetProductResponse response = modelMapperService.forResponse().map(savedProduct,GetProductResponse.class);
 
         return new SuccessDataResult<>(response,"data added");

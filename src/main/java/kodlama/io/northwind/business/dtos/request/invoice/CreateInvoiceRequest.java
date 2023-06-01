@@ -10,7 +10,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateInvoiceRequest {
-    private int invoiceId;
     private String number;
     private Date createdDate;
     private int orderDetailId;

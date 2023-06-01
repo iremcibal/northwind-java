@@ -8,6 +8,7 @@ import kodlama.io.northwind.business.dtos.response.employee.ListEmployeeResponse
 import kodlama.io.northwind.business.dtos.response.order.GetOrderResponse;
 import kodlama.io.northwind.business.dtos.response.order.ListOrderResponse;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.entities.concretes.Order;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("/addOrder")
-    public DataResult<Order> add(@RequestBody CreateOrderRequest createOrderRequest){
+    public Result add(@RequestBody CreateOrderRequest createOrderRequest){
         return orderService.addOrder(createOrderRequest);
     }
 }

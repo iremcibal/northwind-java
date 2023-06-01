@@ -1,16 +1,18 @@
 package kodlama.io.northwind.business.dtos.request.order;
+import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
+import kodlama.io.northwind.entities.concretes.OrderDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderRequest {
-    private int id;
     private Date orderDate;
     private Date requiredDate;
     private Date shippedDate;
@@ -24,4 +26,5 @@ public class CreateOrderRequest {
     private String customerId;
     private int employeeId;
     private int shipperId;
+    private List<CreateOrderDetailRequest> orderDetails;
 }

@@ -23,7 +23,7 @@ public class Invoice {
     private Date createdDate;
 
     @OneToOne
-    @JoinColumn(name="orderdetails_id",referencedColumnName = "order_detail_id")
+    @JoinColumn(name="order_details_id",referencedColumnName = "order_details_id")
     private OrderDetail orderDetail;
 }
 

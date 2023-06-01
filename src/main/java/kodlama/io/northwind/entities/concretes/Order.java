@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Entity
@@ -15,7 +16,8 @@ import java.util.Date;
 public class Order {
     @Id
     @Column(name = "order_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int orderId;
 
     @Column(name = "order_date")
     private Date orderDate;
@@ -58,5 +60,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name="shipper_id")
     private Shipper shipper;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails;
 
 }
