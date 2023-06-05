@@ -31,7 +31,7 @@ public class Customer {
     @Column(name = "contact_title")
     private String contactTitle;
 
-    @Column(name = "address")
+    /*@Column(name = "address")
     private String address;
 
     @Column(name = "city")
@@ -44,7 +44,7 @@ public class Customer {
     private String postalCode;
 
     @Column(name = "country")
-    private String country;
+    private String country;*/
 
     @Column(name = "phone")
     private String phone;

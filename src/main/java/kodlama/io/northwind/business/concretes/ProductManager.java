@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class ProductManager implements ProductService {
     private ProductRepository productRepository;
     private ModelMapperService modelMapperService;
-    private ProductBusinessRules productBusinessRules;
 
     @Override
     public DataResult<List<ListProductResponse>> getAll() {
