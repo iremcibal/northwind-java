@@ -4,9 +4,11 @@ import kodlama.io.northwind.business.abstracts.CategoryService;
 import kodlama.io.northwind.business.abstracts.ProductService;
 import kodlama.io.northwind.business.abstracts.SupplierService;
 import kodlama.io.northwind.business.businessRules.ProductBusinessRules;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.product.CreateProductRequest;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class ProductManager implements ProductService {
     private ProductRepository productRepository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListProductResponse>> getAll() {
@@ -36,7 +39,7 @@ public class ProductManager implements ProductService {
                 .map(product ->modelMapperService.forResponse().map(product,ListProductResponse.class ))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -44,13 +47,13 @@ public class ProductManager implements ProductService {
         Optional<Product> product = productRepository.findById(id);
         GetProductResponse response = modelMapperService.forResponse().map(product,GetProductResponse.class);
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
     public DataResult<Product> getByProductIdData(int id) {
         Product product = productRepository.getByProductId(id);
-        return new SuccessDataResult<>(product,"data listed");
+        return new SuccessDataResult<>(product,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -66,7 +69,7 @@ public class ProductManager implements ProductService {
                 .map(product -> modelMapperService.forResponse().map(product,ListProductResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -74,7 +77,7 @@ public class ProductManager implements ProductService {
         Product product = productRepository.getByProductName(name);
         GetProductResponse response = modelMapperService.forResponse().map(product,GetProductResponse.class);
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -89,6 +92,6 @@ public class ProductManager implements ProductService {
 
         GetProductResponse response = modelMapperService.forResponse().map(savedProduct,GetProductResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

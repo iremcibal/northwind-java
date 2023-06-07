@@ -1,9 +1,11 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.DemographicService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.demographic.CreateDemographicRequest;
 import kodlama.io.northwind.business.dtos.response.demographic.GetDemographicResponse;
 import kodlama.io.northwind.business.dtos.response.demographic.ListDemographicResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class DemographicManager implements DemographicService {
     private DemographicRepository demographicRepository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
 
     @Override
@@ -29,7 +32,7 @@ public class DemographicManager implements DemographicService {
                 .map(demographic -> modelMapperService.forResponse().map(demographic,ListDemographicResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -38,6 +41,6 @@ public class DemographicManager implements DemographicService {
         Demographic savedDemographic = demographicRepository.save(demographic);
         GetDemographicResponse response = modelMapperService.forResponse().map(savedDemographic,GetDemographicResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

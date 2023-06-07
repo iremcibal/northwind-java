@@ -1,9 +1,11 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.BasketService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.basket.CreateBasketRequest;
 import kodlama.io.northwind.business.dtos.response.basket.GetBasketResponse;
 import kodlama.io.northwind.business.dtos.response.basket.ListBasketResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class BasketManager implements BasketService {
     private BasketRepository repository;
     private ModelMapperService service;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListBasketResponse>> getAll() {
@@ -28,7 +31,7 @@ public class BasketManager implements BasketService {
                 .map(basket -> service.forResponse().map(basket,ListBasketResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
 
     }
 
@@ -38,12 +41,12 @@ public class BasketManager implements BasketService {
         Basket savedBasket = repository.save(basket);
         GetBasketResponse response = service.forResponse().map(savedBasket,GetBasketResponse.class);
 
-        return new SuccessDataResult<>(response);
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 
     @Override
     public DataResult<Basket> getByCustomerCustomerId(String customerId) {
         Basket basket = repository.getByCustomer_customerId(customerId);
-        return new SuccessDataResult<>(basket,"data listed");
+        return new SuccessDataResult<>(basket,messageService.getMessage(Messages.Data.dataListed));
     }
 }

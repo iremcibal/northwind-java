@@ -1,10 +1,12 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.CustomerService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.customer.CreateCustomerRequest;
 import kodlama.io.northwind.business.dtos.response.customer.GetCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.customer.ListCustomerResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class CustomerManager implements CustomerService {
     private CustomerRepository customerRepository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListCustomerResponse>> getAll() {
@@ -31,7 +34,7 @@ public class CustomerManager implements CustomerService {
                 .map(customer -> modelMapperService.forResponse().map(customer,ListCustomerResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -40,7 +43,7 @@ public class CustomerManager implements CustomerService {
         Customer savedCustomer = customerRepository.save(customer);
         GetCustomerResponse response = modelMapperService.forResponse().map(savedCustomer,GetCustomerResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 
     @Override
@@ -48,12 +51,12 @@ public class CustomerManager implements CustomerService {
         Customer detail = customerRepository.getCustomerByCustomerId(id);
         GetCustomerResponse response = modelMapperService.forResponse().map(detail,GetCustomerResponse.class);
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
     public DataResult<Customer> getByCustomerId(String id) {
         Customer customer = customerRepository.getCustomerByCustomerId(id);
-        return new SuccessDataResult<>(customer,"data listed");
+        return new SuccessDataResult<>(customer,messageService.getMessage(Messages.Data.dataListed));
     }
 }

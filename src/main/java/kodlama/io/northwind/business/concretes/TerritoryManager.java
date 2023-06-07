@@ -1,9 +1,11 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.TerritoryService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.territory.CreateTerritoryRequest;
 import kodlama.io.northwind.business.dtos.response.territory.GetTerritoryResponse;
 import kodlama.io.northwind.business.dtos.response.territory.ListTerritoryResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class TerritoryManager implements TerritoryService {
     private TerritoryRepository repository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
 
     @Override
@@ -29,7 +32,7 @@ public class TerritoryManager implements TerritoryService {
                 .map(territory -> modelMapperService.forResponse().map(territory,ListTerritoryResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -38,6 +41,6 @@ public class TerritoryManager implements TerritoryService {
         Territory savedTerritory = repository.save(territory);
         GetTerritoryResponse response = modelMapperService.forResponse().map(savedTerritory,GetTerritoryResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

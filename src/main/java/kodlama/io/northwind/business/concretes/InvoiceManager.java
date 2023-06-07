@@ -1,10 +1,12 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.InvoiceService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.invoice.CreateInvoiceRequest;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
 import kodlama.io.northwind.business.dtos.response.invoice.GetInvoiceResponse;
 import kodlama.io.northwind.business.dtos.response.invoice.ListInvoiceResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class InvoiceManager implements InvoiceService {
     private InvoiceRepository repository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
     @Override
     public Result addRange(int orderDetailId, CreateInvoiceRequest createInvoiceRequest) {
@@ -33,7 +36,7 @@ public class InvoiceManager implements InvoiceService {
         invoice.setInvoiceId(orderDetailId);
         repository.save(invoice);
 
-        return new SuccessResult();
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataAdded));
     }
 
     /*@Override

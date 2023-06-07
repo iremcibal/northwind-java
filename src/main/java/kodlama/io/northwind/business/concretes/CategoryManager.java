@@ -2,9 +2,11 @@ package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.CategoryService;
 import kodlama.io.northwind.business.businessRules.CategoryBusinessRules;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.category.CreateCategoryRequest;
 import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
 import kodlama.io.northwind.business.dtos.response.category.ListCategoryResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -26,6 +28,7 @@ public class CategoryManager implements CategoryService {
     private ModelMapperService modelMapperService;
     @Autowired
     private CategoryBusinessRules rules;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListCategoryResponse>> getAll() {
@@ -34,7 +37,7 @@ public class CategoryManager implements CategoryService {
                 .map(category -> modelMapperService.forResponse().map(category,ListCategoryResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class CategoryManager implements CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow();
         GetCategoryResponse response = modelMapperService.forResponse().map(category,GetCategoryResponse.class);
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -52,6 +55,6 @@ public class CategoryManager implements CategoryService {
         Category savedCategory = categoryRepository.save(category);
         GetCategoryResponse response = modelMapperService.forResponse().map(savedCategory,GetCategoryResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

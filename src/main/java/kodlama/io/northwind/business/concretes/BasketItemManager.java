@@ -1,9 +1,11 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.BasketItemService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.basketItem.CreateBasketItemRequest;
 import kodlama.io.northwind.business.dtos.response.basketItem.GetBasketItemResponse;
 import kodlama.io.northwind.business.dtos.response.basketItem.ListBasketItemResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class BasketItemManager implements BasketItemService {
     private BasketItemRepository repository;
     private ModelMapperService service;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListBasketItemResponse>> getAll() {
@@ -28,7 +31,7 @@ public class BasketItemManager implements BasketItemService {
                 .map(basketItem -> service.forResponse().map(basketItem,ListBasketItemResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -37,6 +40,6 @@ public class BasketItemManager implements BasketItemService {
         BasketItem savedBasketItem = repository.save(basketItem);
         GetBasketItemResponse response = service.forResponse().map(savedBasketItem,GetBasketItemResponse.class);
 
-        return new SuccessDataResult<>(response,"data saved");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

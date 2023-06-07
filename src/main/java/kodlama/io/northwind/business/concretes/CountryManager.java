@@ -1,11 +1,13 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.CountryService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.country.CreateCountryRequest;
 import kodlama.io.northwind.business.dtos.response.city.GetCityResponse;
 import kodlama.io.northwind.business.dtos.response.city.ListCityResponse;
 import kodlama.io.northwind.business.dtos.response.country.GetCountryResponse;
 import kodlama.io.northwind.business.dtos.response.country.ListCountryResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class CountryManager implements CountryService {
     private CountryRepository countryRepository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
     @Override
     public DataResult<List<ListCountryResponse>> getAll() {
@@ -31,7 +34,7 @@ public class CountryManager implements CountryService {
                 .map(country -> modelMapperService.forResponse().map(country,ListCountryResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -39,7 +42,7 @@ public class CountryManager implements CountryService {
         Country country = countryRepository.findById(id).orElseThrow();
         GetCountryResponse response = modelMapperService.forResponse().map(country,GetCountryResponse.class);
 
-        return new SuccessDataResult<>(response,"data listed");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -48,6 +51,6 @@ public class CountryManager implements CountryService {
         Country savedCountry = countryRepository.save(country);
         GetCountryResponse response = modelMapperService.forResponse().map(savedCountry,GetCountryResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

@@ -3,11 +3,13 @@ package kodlama.io.northwind.business.concretes;
 import kodlama.io.northwind.business.abstracts.InvoiceService;
 import kodlama.io.northwind.business.abstracts.OrderDetailService;
 import kodlama.io.northwind.business.abstracts.ProductService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.invoice.CreateInvoiceRequest;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.ListOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
@@ -32,6 +34,7 @@ public class OrderDetailManager implements OrderDetailService {
     private OrderDetailRepository repository;
     private ModelMapperService modelMapperService;
     private InvoiceService invoiceService;
+    private MessageService messageService;
 
     @Override
     public Result addRange(int orderId, List<CreateOrderDetailRequest> createOrderDetailRequest) {
@@ -43,7 +46,7 @@ public class OrderDetailManager implements OrderDetailService {
 
         }
 
-        return new SuccessResult();
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataAdded));
     }
 
     /*@Override

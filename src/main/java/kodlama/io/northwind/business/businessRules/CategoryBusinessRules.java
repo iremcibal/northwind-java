@@ -3,6 +3,7 @@ package kodlama.io.northwind.business.businessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.core.exception.BusinessException;
 import kodlama.io.northwind.core.exception.InternalException;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.dataAccess.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -14,17 +15,14 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class CategoryBusinessRules {
     private CategoryRepository repository;
-    private MessageSource messageSource;
+    //private MessageSource messageSource;
+    private MessageService messageService;
 
     public void CategoryExistsWithSameName(String name){
         boolean isExists = repository.existsCategoryByCategoryName(name);
 
         if(isExists){
-            throw new InternalException(
-                    messageSource.getMessage(Messages.Category.CategoryExistsWithSameName,
-                    null,
-                    LocaleContextHolder.getLocale())
-            );
+            throw new InternalException(messageService.getMessage(Messages.Category.CategoryExistsWithSameName));
         }
     }
 }

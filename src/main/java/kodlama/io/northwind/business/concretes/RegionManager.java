@@ -1,9 +1,11 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.RegionService;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.region.CreateRegionRequest;
 import kodlama.io.northwind.business.dtos.response.region.GetRegionResponse;
 import kodlama.io.northwind.business.dtos.response.region.ListRegionResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.SuccessDataResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class RegionManager implements RegionService {
     private RegionRepository repository;
     private ModelMapperService modelMapperService;
+    private MessageService messageService;
 
 
     @Override
@@ -29,7 +32,7 @@ public class RegionManager implements RegionService {
                 .map(region -> modelMapperService.forResponse().map(region,ListRegionResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -38,6 +41,6 @@ public class RegionManager implements RegionService {
         Region savedRegion = repository.save(region);
         GetRegionResponse response = modelMapperService.forResponse().map(savedRegion,GetRegionResponse.class);
 
-        return new SuccessDataResult<>(response,"data added");
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
     }
 }

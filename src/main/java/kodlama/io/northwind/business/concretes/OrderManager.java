@@ -1,6 +1,7 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.*;
+import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.invoice.CreateInvoiceRequest;
 import kodlama.io.northwind.business.dtos.request.order.CreateOrderRequest;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
@@ -10,6 +11,7 @@ import kodlama.io.northwind.business.dtos.response.order.GetOrderResponse;
 import kodlama.io.northwind.business.dtos.response.order.ListOrderResponse;
 import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
+import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
@@ -35,6 +37,7 @@ public class OrderManager implements OrderService {
     private OrderDetailService orderDetailService;
     private InvoiceService invoiceService;
     private ProductService productService;
+    private MessageService messageService;
 
 
     @Override
@@ -44,7 +47,7 @@ public class OrderManager implements OrderService {
                 .map(order -> modelMapperService.forResponse().map(order,ListOrderResponse.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<>(responses,"data listed");
+        return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
     }
 
     @Override
@@ -55,7 +58,7 @@ public class OrderManager implements OrderService {
         orderRepository.save(order);
         orderDetailService.addRange(order.getOrderId() , createOrderRequest.getOrderDetails());
 
-        return new SuccessResult("data added");
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataAdded));
     }
 
     public double totalPrice(Product product, CreateOrderDetailRequest request) {
