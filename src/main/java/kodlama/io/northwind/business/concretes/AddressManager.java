@@ -40,7 +40,7 @@ public class AddressManager implements AddressService {
 
     @Override
     public DataResult<Slice<ListAddressResponse>> getAllWithPagination(Pageable pageable) {
-        return new SuccessDataResult<>(addressRepository.findAllPageable(pageable));
+        return new SuccessDataResult<>(addressRepository.getAllWithSlice(pageable));
     }
 
     @Override

@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListProductResponse {
+    private int productId;
     private String productName;
     private double unitPrice;
 }

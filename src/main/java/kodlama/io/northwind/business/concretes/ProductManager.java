@@ -19,6 +19,9 @@ import kodlama.io.northwind.entities.concretes.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,5 +96,20 @@ public class ProductManager implements ProductService {
         GetProductResponse response = modelMapperService.forResponse().map(savedProduct,GetProductResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public Page<Product> findAllWithPagination(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Slice<Product> findAllWithSlice(Pageable pageable) {
+        return productRepository.getAllWithSlice(pageable);
+    }
+
+    @Override
+    public Page<ListProductResponse> findAllWithPaginationDto(Pageable pageable) {
+        return productRepository.getAllListProducts(pageable);
     }
 }

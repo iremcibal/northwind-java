@@ -5,6 +5,9 @@ import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
 import kodlama.io.northwind.core.results.DataResult;
 import kodlama.io.northwind.entities.concretes.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import javax.xml.crypto.Data;
 import java.util.List;
@@ -14,8 +17,17 @@ public interface ProductService {
     DataResult<GetProductResponse> getById(int id);
     DataResult<Product> getByProductIdData(int id);
     Product getByProductId(int id);
+
     //repositoryde jpa metotları dışında metot oluşturuluyor!!
     DataResult<List<ListProductResponse>> getAllByUnitsInStockGreaterThan(int stock);
     DataResult<GetProductResponse> getByProductName(String name);
     DataResult<GetProductResponse> addProduct(CreateProductRequest createProductRequest);
+
+    //Pagination exp
+    //Sort – Sıralama için kullanılan sınıftır.
+    //Slice – Parçalama işlemleri yer alır.
+    //Page – Parçalama ve sayfalama işlemleri yer alır.
+    Page<Product> findAllWithPagination(Pageable pageable);
+    Slice<Product> findAllWithSlice(Pageable pageable);
+    Page<ListProductResponse> findAllWithPaginationDto(Pageable pageable);
 }
