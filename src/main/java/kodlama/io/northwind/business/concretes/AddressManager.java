@@ -15,6 +15,8 @@ import kodlama.io.northwind.entities.concretes.Address;
 import kodlama.io.northwind.entities.concretes.Category;
 import kodlama.io.northwind.entities.concretes.Region;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,11 @@ public class AddressManager implements AddressService {
                 .collect(Collectors.toList());
 
         return new SuccessDataResult<>(responses,messageService.getMessage(Messages.Data.dataListed));
+    }
+
+    @Override
+    public DataResult<Slice<ListAddressResponse>> getAllWithPagination(Pageable pageable) {
+        return new SuccessDataResult<>(addressRepository.findAllPageable(pageable));
     }
 
     @Override

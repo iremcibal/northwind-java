@@ -9,6 +9,9 @@ import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
 import kodlama.io.northwind.business.dtos.response.category.ListCategoryResponse;
 import kodlama.io.northwind.core.results.DataResult;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,5 +36,11 @@ public class AddressController {
     @PostMapping("/addAddress")
     public DataResult<GetAddressResponse> add(@Valid @RequestBody CreateAddressRequest createAddressRequest){
         return addressService.addAddress(createAddressRequest);
+    }
+
+    @GetMapping("getWithPagination")
+    public DataResult<Slice<ListAddressResponse>> getAll(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return addressService.getAllWithPagination(pageable);
     }
 }
