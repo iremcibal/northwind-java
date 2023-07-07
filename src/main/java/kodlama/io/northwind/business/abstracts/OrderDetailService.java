@@ -21,4 +21,5 @@ public interface OrderDetailService {
     //DataResult<GetOrderDetailResponse> getById(int id);
 
     Result addRange(int orderId, List<CreateOrderDetailRequest> createOrderDetailRequest);
+    Result delete(int id);
 }

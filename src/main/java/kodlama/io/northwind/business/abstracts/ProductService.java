@@ -1,9 +1,13 @@
 package kodlama.io.northwind.business.abstracts;
 
+import kodlama.io.northwind.business.dtos.request.employee.UpdateEmployeeRequest;
 import kodlama.io.northwind.business.dtos.request.product.CreateProductRequest;
+import kodlama.io.northwind.business.dtos.request.product.UpdateProductRequest;
+import kodlama.io.northwind.business.dtos.response.employee.GetEmployeeResponse;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.entities.concretes.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +21,8 @@ public interface ProductService {
     DataResult<GetProductResponse> getById(int id);
     DataResult<Product> getByProductIdData(int id);
     Product getByProductId(int id);
+    DataResult<GetProductResponse> update(UpdateProductRequest request, int id);
+    Result delete(int id);
 
     //repositoryde jpa metotları dışında metot oluşturuluyor!!
     DataResult<List<ListProductResponse>> getAllByUnitsInStockGreaterThan(int stock);
@@ -30,4 +36,6 @@ public interface ProductService {
     Page<Product> findAllWithPagination(Pageable pageable);
     Slice<Product> findAllWithSlice(Pageable pageable);
     Page<ListProductResponse> findAllWithPaginationDto(Pageable pageable);
+
+
 }

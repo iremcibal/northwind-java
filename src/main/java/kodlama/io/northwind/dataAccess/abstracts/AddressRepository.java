@@ -11,4 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface AddressRepository extends JpaRepository<Address,Integer> {
     @Query("Select a from Address as a")
     Slice<ListAddressResponse> getAllWithSlice(Pageable pageable);
+
+    boolean existsAddressByAddressId(int id);
 }

@@ -4,4 +4,5 @@ import kodlama.io.northwind.entities.concretes.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CountryRepository extends JpaRepository<Country,Integer> {
+    boolean existsCountryByCountryId(int id);
 }

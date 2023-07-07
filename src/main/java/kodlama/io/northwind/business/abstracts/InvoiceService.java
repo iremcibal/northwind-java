@@ -17,4 +17,5 @@ public interface InvoiceService {
     DataResult<GetInvoiceResponse> addInvoiceRes(CreateInvoiceRequest createInvoiceRequest);
     DataResult<Invoice> addInvoice(Invoice invoice);*/
     Result addRange(int orderDetailId, CreateInvoiceRequest createInvoiceRequest);
+    Result delete(int id);
 }

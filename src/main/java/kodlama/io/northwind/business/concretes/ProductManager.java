@@ -1,24 +1,21 @@
 package kodlama.io.northwind.business.concretes;
 
-import kodlama.io.northwind.business.abstracts.CategoryService;
 import kodlama.io.northwind.business.abstracts.ProductService;
-import kodlama.io.northwind.business.abstracts.SupplierService;
 import kodlama.io.northwind.business.businessRules.ProductBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.product.CreateProductRequest;
+import kodlama.io.northwind.business.dtos.request.product.UpdateProductRequest;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.ProductRepository;
-import kodlama.io.northwind.entities.concretes.Category;
 import kodlama.io.northwind.entities.concretes.Product;
-import kodlama.io.northwind.entities.concretes.Supplier;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -34,6 +31,7 @@ public class ProductManager implements ProductService {
     private ProductRepository productRepository;
     private ModelMapperService modelMapperService;
     private MessageService messageService;
+    private ProductBusinessRules productBusinessRules;
 
     @Override
     public DataResult<List<ListProductResponse>> getAll() {
@@ -63,6 +61,24 @@ public class ProductManager implements ProductService {
     public Product getByProductId(int id) {
         Product product = productRepository.getByProductId(id);
         return product;
+    }
+
+    @Override
+    public DataResult<GetProductResponse> update(UpdateProductRequest request, int id) {
+        productBusinessRules.checkIfProductExistById(id);
+        Product product = modelMapperService.forRequest().map(request,Product.class);
+        Product savedProduct = productRepository.save(product);
+        GetProductResponse response = modelMapperService.forResponse().map(savedProduct,GetProductResponse.class);
+
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
+    }
+
+    @Override
+    public Result delete(int id) {
+        productBusinessRules.checkIfProductExistById(id);
+        productRepository.deleteById(id);
+
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 
     @Override

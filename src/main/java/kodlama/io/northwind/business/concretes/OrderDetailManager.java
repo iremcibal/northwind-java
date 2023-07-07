@@ -3,6 +3,7 @@ package kodlama.io.northwind.business.concretes;
 import kodlama.io.northwind.business.abstracts.InvoiceService;
 import kodlama.io.northwind.business.abstracts.OrderDetailService;
 import kodlama.io.northwind.business.abstracts.ProductService;
+import kodlama.io.northwind.business.businessRules.OrderDetailBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.invoice.CreateInvoiceRequest;
 import kodlama.io.northwind.business.dtos.request.orderDetail.CreateOrderDetailRequest;
@@ -35,6 +36,7 @@ public class OrderDetailManager implements OrderDetailService {
     private ModelMapperService modelMapperService;
     private InvoiceService invoiceService;
     private MessageService messageService;
+    private OrderDetailBusinessRules orderDetailBusinessRules;
 
     @Override
     public Result addRange(int orderId, List<CreateOrderDetailRequest> createOrderDetailRequest) {
@@ -47,6 +49,15 @@ public class OrderDetailManager implements OrderDetailService {
         }
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public Result delete(int id) {
+        orderDetailBusinessRules.checkIfOrderDetailExistById(id);
+        invoiceService.delete(id);
+        repository.deleteById(id);
+
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 
     /*@Override

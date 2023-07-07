@@ -1,19 +1,21 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.SupplierService;
+import kodlama.io.northwind.business.businessRules.SupplierBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.supplier.CreateSupplierRequest;
-import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
+import kodlama.io.northwind.business.dtos.request.supplier.UpdateSupplierRequest;
 import kodlama.io.northwind.business.dtos.response.supplier.GetSupplierResponse;
 import kodlama.io.northwind.business.dtos.response.supplier.ListSupplierResponse;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.SupplierRepository;
 import kodlama.io.northwind.entities.concretes.Supplier;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class SupplierManager implements SupplierService {
     private SupplierRepository supplierRepository;
     private ModelMapperService modelMapperService;
     private MessageService messageService;
+    private SupplierBusinessRules supplierBusinessRules;
 
     @Override
     public DataResult<List<ListSupplierResponse>> getAll() {
@@ -51,5 +54,23 @@ public class SupplierManager implements SupplierService {
         GetSupplierResponse response = modelMapperService.forResponse().map(savedSupplier,GetSupplierResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public DataResult<GetSupplierResponse> update(UpdateSupplierRequest request, int id) {
+        supplierBusinessRules.checkIfSupplierExistById(id);
+        Supplier supplier = modelMapperService.forRequest().map(request,Supplier.class);
+        Supplier savedSupplier = supplierRepository.save(supplier);
+        GetSupplierResponse response = modelMapperService.forResponse().map(savedSupplier,GetSupplierResponse.class);
+
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
+    }
+
+    @Override
+    public Result delete(int id) {
+        supplierBusinessRules.checkIfSupplierExistById(id);
+        supplierRepository.deleteById(id);
+
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 }

@@ -1,18 +1,19 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.CountryService;
+import kodlama.io.northwind.business.businessRules.CountryBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.country.CreateCountryRequest;
-import kodlama.io.northwind.business.dtos.response.city.GetCityResponse;
-import kodlama.io.northwind.business.dtos.response.city.ListCityResponse;
+import kodlama.io.northwind.business.dtos.request.country.UpdateCountryRequest;
 import kodlama.io.northwind.business.dtos.response.country.GetCountryResponse;
 import kodlama.io.northwind.business.dtos.response.country.ListCountryResponse;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.CountryRepository;
-import kodlama.io.northwind.entities.concretes.City;
 import kodlama.io.northwind.entities.concretes.Country;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class CountryManager implements CountryService {
     private CountryRepository countryRepository;
     private ModelMapperService modelMapperService;
     private MessageService messageService;
+    private CountryBusinessRules countryBusinessRules;
 
     @Override
     public DataResult<List<ListCountryResponse>> getAll() {
@@ -52,5 +54,22 @@ public class CountryManager implements CountryService {
         GetCountryResponse response = modelMapperService.forResponse().map(savedCountry,GetCountryResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public DataResult<GetCountryResponse> update(UpdateCountryRequest request, int id) {
+        countryBusinessRules.checkIfCountryExistById(id);
+        Country country = modelMapperService.forRequest().map(request,Country.class);
+        Country savedCountry = countryRepository.save(country);
+        GetCountryResponse response = modelMapperService.forResponse().map(savedCountry,GetCountryResponse.class);
+
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
+    }
+
+    @Override
+    public Result delete(int id) {
+        countryBusinessRules.checkIfCountryExistById(id);
+        countryRepository.deleteById(id);
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 }

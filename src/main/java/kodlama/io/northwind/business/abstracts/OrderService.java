@@ -12,4 +12,5 @@ import java.util.List;
 public interface OrderService {
     DataResult<List<ListOrderResponse>> getAll();
     Result addOrder(CreateOrderRequest createOrderRequest);
+    Result delete(int id);
 }

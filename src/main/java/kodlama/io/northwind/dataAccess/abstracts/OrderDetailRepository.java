@@ -13,7 +13,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
             "from OrderDetail od join od.product p join od.order o where o.id=:orderId")
     List<ListOrderDetailResponse> findAllOrderById(int orderId);
 
-
+    boolean existsOrderDetailById(int id);
 
 
 

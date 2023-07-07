@@ -25,4 +25,12 @@ public class CategoryBusinessRules {
             throw new InternalException(messageService.getMessage(Messages.Category.CategoryExistsWithSameName));
         }
     }
+
+    public void CategoryExistsWithSameId(int id){
+        boolean isExists = repository.existsCategoryByCategoryId(id);
+
+        if(isExists){
+            throw new InternalException(messageService.getMessage(Messages.Category.CategoryExistsWithSameId));
+        }
+    }
 }

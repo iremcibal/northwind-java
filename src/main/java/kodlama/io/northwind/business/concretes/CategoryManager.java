@@ -4,11 +4,14 @@ import kodlama.io.northwind.business.abstracts.CategoryService;
 import kodlama.io.northwind.business.businessRules.CategoryBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.category.CreateCategoryRequest;
+import kodlama.io.northwind.business.dtos.request.category.UpdateCategoryRequest;
 import kodlama.io.northwind.business.dtos.response.category.GetCategoryResponse;
 import kodlama.io.northwind.business.dtos.response.category.ListCategoryResponse;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.CategoryRepository;
 import kodlama.io.northwind.entities.concretes.Category;
@@ -56,5 +59,23 @@ public class CategoryManager implements CategoryService {
         GetCategoryResponse response = modelMapperService.forResponse().map(savedCategory,GetCategoryResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public DataResult<GetCategoryResponse> update(UpdateCategoryRequest request, int id) {
+        rules.CategoryExistsWithSameId(id);
+        Category category = modelMapperService.forRequest().map(request,Category.class);
+        Category savedCategory = categoryRepository.save(category);
+        GetCategoryResponse response = modelMapperService.forResponse().map(savedCategory,GetCategoryResponse.class);
+
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
+    }
+
+    @Override
+    public Result delete(int id) {
+        rules.CategoryExistsWithSameId(id);
+        categoryRepository.deleteById(id);
+
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 }

@@ -1,13 +1,17 @@
 package kodlama.io.northwind.business.concretes;
 
 import kodlama.io.northwind.business.abstracts.RegionService;
+import kodlama.io.northwind.business.businessRules.RegionBusinessRules;
 import kodlama.io.northwind.business.constants.Messages;
 import kodlama.io.northwind.business.dtos.request.region.CreateRegionRequest;
+import kodlama.io.northwind.business.dtos.request.region.UpdateRegionRequest;
 import kodlama.io.northwind.business.dtos.response.region.GetRegionResponse;
 import kodlama.io.northwind.business.dtos.response.region.ListRegionResponse;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.core.results.SuccessDataResult;
+import kodlama.io.northwind.core.results.SuccessResult;
 import kodlama.io.northwind.core.util.mapping.ModelMapperService;
 import kodlama.io.northwind.dataAccess.abstracts.RegionRepository;
 import kodlama.io.northwind.entities.concretes.Region;
@@ -23,6 +27,7 @@ public class RegionManager implements RegionService {
     private RegionRepository repository;
     private ModelMapperService modelMapperService;
     private MessageService messageService;
+    private RegionBusinessRules regionBusinessRules;
 
 
     @Override
@@ -42,5 +47,23 @@ public class RegionManager implements RegionService {
         GetRegionResponse response = modelMapperService.forResponse().map(savedRegion,GetRegionResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataAdded));
+    }
+
+    @Override
+    public DataResult<GetRegionResponse> update(UpdateRegionRequest request, int id) {
+        regionBusinessRules.checkIfRegionExistById(id);
+        Region region = modelMapperService.forRequest().map(request,Region.class);
+        Region savedRegion = repository.save(region);
+        GetRegionResponse response = modelMapperService.forResponse().map(savedRegion,GetRegionResponse.class);
+
+        return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
+    }
+
+    @Override
+    public Result delete(int id) {
+        regionBusinessRules.checkIfRegionExistById(id);
+        repository.deleteById(id);
+
+        return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }
 }

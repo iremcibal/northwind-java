@@ -30,4 +30,8 @@ public class OrderController {
     public Result add(@RequestBody CreateOrderRequest createOrderRequest){
         return orderService.addOrder(createOrderRequest);
     }
+    @DeleteMapping("/delete")
+    public Result delete(int id){
+        return orderService.delete(id);
+    }
 }

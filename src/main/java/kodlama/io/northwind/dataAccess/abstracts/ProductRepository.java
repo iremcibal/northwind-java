@@ -22,4 +22,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query("Select new kodlama.io.northwind.business.dtos.response.product.ListProductResponse(p.productId,p.productName,p.unitPrice) from Product as p")
     Page<ListProductResponse> getAllListProducts(Pageable pageable);
+
+    boolean existsProductByProductId(int id);
 }

@@ -1,10 +1,14 @@
 package kodlama.io.northwind.api;
 
 import kodlama.io.northwind.business.abstracts.ProductService;
+import kodlama.io.northwind.business.dtos.request.employee.UpdateEmployeeRequest;
 import kodlama.io.northwind.business.dtos.request.product.CreateProductRequest;
+import kodlama.io.northwind.business.dtos.request.product.UpdateProductRequest;
+import kodlama.io.northwind.business.dtos.response.employee.GetEmployeeResponse;
 import kodlama.io.northwind.business.dtos.response.product.GetProductResponse;
 import kodlama.io.northwind.business.dtos.response.product.ListProductResponse;
 import kodlama.io.northwind.core.results.DataResult;
+import kodlama.io.northwind.core.results.Result;
 import kodlama.io.northwind.entities.concretes.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +78,13 @@ public class ProductsController {
     getWithPaginationDto(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
         Pageable pageable = PageRequest.of(page,pageSize);
         return productService.findAllWithPaginationDto(pageable);
+    }
+    @PutMapping("/update")
+    public DataResult<GetProductResponse> update(@Valid @RequestBody UpdateProductRequest updateProductRequest, int id){
+        return productService.update(updateProductRequest,id);
+    }
+    @DeleteMapping("/delete")
+    public Result delete(int id){
+        return productService.delete(id);
     }
 }
