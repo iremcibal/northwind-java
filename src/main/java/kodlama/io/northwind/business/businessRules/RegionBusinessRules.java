@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class RegionBusinessRules {
     private RegionRepository regionRepository;
     private MessageService messageService;
-    public void checkIfRegionExistById(int id){
+    public void checkIfRegionNotExistById(int id){
         boolean isExists = regionRepository.existsRegionByRegionId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Region.RegionExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Region.RegionNotExistsWithSameId));
         }
     }
 }

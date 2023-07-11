@@ -13,10 +13,10 @@ public class InvoiceBusinessRules {
     private InvoiceRepository invoiceRepository;
     private MessageService messageService;
 
-    public void checkIfInvoiceExistById(int id){
+    public void checkIfInvoiceNotExistById(int id){
         boolean isExists = invoiceRepository.existsInvoiceByInvoiceId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Invoice.InvoiceExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Invoice.InvoiceNotExistsWithSameId));
         }
     }
 }

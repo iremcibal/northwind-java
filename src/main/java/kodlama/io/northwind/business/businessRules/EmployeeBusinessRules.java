@@ -13,10 +13,10 @@ public class EmployeeBusinessRules {
     private EmployeeRepository employeeRepository;
     private MessageService messageService;
 
-    public void checkIfEmployeeExistById(int id){
+    public void checkIfEmployeeNotExistById(int id){
         boolean isExists = employeeRepository.existsEmployeeByEmployeeId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Employee.EmployeeExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Employee.EmployeeNotExistsWithSameId));
         }
     }
 }

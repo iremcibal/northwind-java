@@ -58,17 +58,18 @@ public class SupplierManager implements SupplierService {
 
     @Override
     public DataResult<GetSupplierResponse> update(UpdateSupplierRequest request, int id) {
-        supplierBusinessRules.checkIfSupplierExistById(id);
+        supplierBusinessRules.checkIfSupplierNotExistById(id);
         Supplier supplier = modelMapperService.forRequest().map(request,Supplier.class);
-        Supplier savedSupplier = supplierRepository.save(supplier);
-        GetSupplierResponse response = modelMapperService.forResponse().map(savedSupplier,GetSupplierResponse.class);
+        supplier.setSupplierId(id);
+        supplierRepository.save(supplier);
+        GetSupplierResponse response = modelMapperService.forResponse().map(supplier,GetSupplierResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        supplierBusinessRules.checkIfSupplierExistById(id);
+        supplierBusinessRules.checkIfSupplierNotExistById(id);
         supplierRepository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

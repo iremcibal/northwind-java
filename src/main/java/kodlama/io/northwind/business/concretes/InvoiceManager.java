@@ -33,7 +33,7 @@ public class InvoiceManager implements InvoiceService {
 
     @Override
     public Result addRange(int orderDetailId, CreateInvoiceRequest createInvoiceRequest) {
-        createInvoiceRequest.setOrderDetailId(orderDetailId);
+        createInvoiceRequest.setOrderDetailsId(orderDetailId);
         Invoice invoice = modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
         invoice.setInvoiceId(orderDetailId);
         repository.save(invoice);
@@ -43,7 +43,7 @@ public class InvoiceManager implements InvoiceService {
 
     @Override
     public Result delete(int id) {
-        invoiceBusinessRules.checkIfInvoiceExistById(id);
+        invoiceBusinessRules.checkIfInvoiceNotExistById(id);
         repository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

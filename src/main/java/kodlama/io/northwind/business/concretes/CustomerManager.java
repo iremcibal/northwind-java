@@ -64,19 +64,21 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public DataResult<GetCustomerResponse> update(UpdateCustomerRequest request, int id) {
-        customerBusinessRules.checkIfCustomerExistById(id);
+    public DataResult<GetCustomerResponse> update(UpdateCustomerRequest request, String id) {
+        customerBusinessRules.checkIfCustomerNotExistById(id);
         Customer customer = modelMapperService.forRequest().map(request,Customer.class);
-        Customer savedCustomer = customerRepository.save(customer);
-        GetCustomerResponse response = modelMapperService.forResponse().map(savedCustomer,GetCustomerResponse.class);
+        customer.setCustomerId(id);
+        customerRepository.save(customer);
+        GetCustomerResponse response = modelMapperService.forResponse().map(customer,GetCustomerResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
-    public Result delete(int id) {
-        customerBusinessRules.checkIfCustomerExistById(id);
-        customerRepository.deleteById(id);
+    public Result delete(String id) {
+        customerBusinessRules.checkIfCustomerNotExistById(id);
+        Customer customer = customerRepository.getCustomerByCustomerId(id);
+        customerRepository.delete(customer);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }

@@ -51,17 +51,18 @@ public class RegionManager implements RegionService {
 
     @Override
     public DataResult<GetRegionResponse> update(UpdateRegionRequest request, int id) {
-        regionBusinessRules.checkIfRegionExistById(id);
+        regionBusinessRules.checkIfRegionNotExistById(id);
         Region region = modelMapperService.forRequest().map(request,Region.class);
-        Region savedRegion = repository.save(region);
-        GetRegionResponse response = modelMapperService.forResponse().map(savedRegion,GetRegionResponse.class);
+        region.setRegionId(id);
+        repository.save(region);
+        GetRegionResponse response = modelMapperService.forResponse().map(region,GetRegionResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        regionBusinessRules.checkIfRegionExistById(id);
+        regionBusinessRules.checkIfRegionNotExistById(id);
         repository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

@@ -16,7 +16,7 @@ public class GetInvoiceResponse {
     private int invoiceId;
     private String number;
     private Date createdDate;
-    private OrderDetail orderDetailId;
+    private OrderDetail orderDetailsId;
     private String productName;
     private double  unitPrice;
     private int quantity;

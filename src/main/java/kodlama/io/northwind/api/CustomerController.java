@@ -31,11 +31,11 @@ public class CustomerController {
         return customerService.addCustomer(createCustomerRequest);
     }
     @PutMapping("/update")
-    public DataResult<GetCustomerResponse> update(@Valid @RequestBody UpdateCustomerRequest updateCustomerRequest, int id){
+    public DataResult<GetCustomerResponse> update(@Valid @RequestBody UpdateCustomerRequest updateCustomerRequest, String id){
         return customerService.update(updateCustomerRequest,id);
     }
     @DeleteMapping("/delete")
-    public Result delete(int id){
+    public Result delete(String id){
         return customerService.delete(id);
     }
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListOrderResponse {
+    private int orderId;
     private Date orderDate;
     private Date requiredDate;
     private Date shippedDate;

@@ -65,7 +65,7 @@ public class OrderManager implements OrderService {
 
     @Override
     public Result delete(int id) {
-        orderBusinessRules.checkIfOrderExistById(id);
+        orderBusinessRules.checkIfOrderNotExistById(id);
         orderDetailService.delete(id);
         orderRepository.deleteById(id);
 

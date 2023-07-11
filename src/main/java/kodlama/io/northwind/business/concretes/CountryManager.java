@@ -58,17 +58,18 @@ public class CountryManager implements CountryService {
 
     @Override
     public DataResult<GetCountryResponse> update(UpdateCountryRequest request, int id) {
-        countryBusinessRules.checkIfCountryExistById(id);
+        countryBusinessRules.checkIfCountryNotExistById(id);
         Country country = modelMapperService.forRequest().map(request,Country.class);
-        Country savedCountry = countryRepository.save(country);
-        GetCountryResponse response = modelMapperService.forResponse().map(savedCountry,GetCountryResponse.class);
+        country.setCountryId(id);
+        countryRepository.save(country);
+        GetCountryResponse response = modelMapperService.forResponse().map(country,GetCountryResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        countryBusinessRules.checkIfCountryExistById(id);
+        countryBusinessRules.checkIfCountryNotExistById(id);
         countryRepository.deleteById(id);
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }

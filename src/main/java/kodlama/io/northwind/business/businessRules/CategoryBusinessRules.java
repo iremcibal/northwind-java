@@ -26,11 +26,11 @@ public class CategoryBusinessRules {
         }
     }
 
-    public void CategoryExistsWithSameId(int id){
+    public void CategoryNotExistsWithSameId(int id){
         boolean isExists = repository.existsCategoryByCategoryId(id);
 
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Category.CategoryExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Category.CategoryNotExistsWithSameId));
         }
     }
 }

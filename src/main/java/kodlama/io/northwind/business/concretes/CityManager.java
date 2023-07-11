@@ -57,17 +57,18 @@ public class CityManager implements CityService {
 
     @Override
     public DataResult<GetCityResponse> update(UpdateCityRequest request, int id) {
-        cityBusinessRules.checkIfCityExistById(id);
+        cityBusinessRules.checkIfCityNotExistById(id);
         City city = modelMapperService.forRequest().map(request,City.class);
-        City savedCity = cityRepository.save(city);
-        GetCityResponse response = modelMapperService.forResponse().map(savedCity,GetCityResponse.class);
+        city.setCityId(id);
+        cityRepository.save(city);
+        GetCityResponse response = modelMapperService.forResponse().map(city,GetCityResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        cityBusinessRules.checkIfCityExistById(id);
+        cityBusinessRules.checkIfCityNotExistById(id);
         cityRepository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

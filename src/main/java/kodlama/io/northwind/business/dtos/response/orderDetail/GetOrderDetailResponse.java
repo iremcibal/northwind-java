@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GetOrderDetailResponse {
-    private int id;
+    private int orderDetailsId;
     private double  unitPrice;
     private int quantity;
     private double discount;

@@ -13,10 +13,10 @@ public class CustomerBusinessRules {
     private CustomerRepository customerRepository;
     private MessageService messageService;
 
-    public void checkIfCustomerExistById(int id){
+    public void checkIfCustomerNotExistById(String id){
         boolean isExists = customerRepository.existsCustomerByCustomerId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Customer.CustomerExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Customer.CustomerNotExistsWithSameId));
         }
     }
 }

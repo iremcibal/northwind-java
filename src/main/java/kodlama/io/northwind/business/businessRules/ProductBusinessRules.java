@@ -15,10 +15,10 @@ public class ProductBusinessRules {
     private ProductRepository repository;
     private MessageService messageService;
 
-    public void checkIfProductExistById(int id){
+    public void checkIfProductNotExistById(int id){
         boolean isExists = repository.existsProductByProductId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Product.ProductExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Product.ProductNotExistsWithSameId));
         }
     }
 }

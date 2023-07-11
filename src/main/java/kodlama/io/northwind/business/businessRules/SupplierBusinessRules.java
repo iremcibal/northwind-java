@@ -14,10 +14,10 @@ public class SupplierBusinessRules {
     private SupplierRepository repository;
     private MessageService messageService;
 
-    public void checkIfSupplierExistById(int id){
+    public void checkIfSupplierNotExistById(int id){
         boolean isExists = repository.existsSupplierBySupplierId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Supplier.SupplierExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Supplier.SupplierNotExistsWithSameId));
         }
     }
 }

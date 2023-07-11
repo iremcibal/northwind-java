@@ -13,10 +13,10 @@ public class CountryBusinessRules {
     private CountryRepository countryRepository;
     private MessageService messageService;
 
-    public void checkIfCountryExistById(int id){
+    public void checkIfCountryNotExistById(int id){
         boolean isExists = countryRepository.existsCountryByCountryId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Country.CountryExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Country.CountryNotExistsWithSameId));
         }
     }
 }

@@ -65,17 +65,18 @@ public class ProductManager implements ProductService {
 
     @Override
     public DataResult<GetProductResponse> update(UpdateProductRequest request, int id) {
-        productBusinessRules.checkIfProductExistById(id);
+        productBusinessRules.checkIfProductNotExistById(id);
         Product product = modelMapperService.forRequest().map(request,Product.class);
-        Product savedProduct = productRepository.save(product);
-        GetProductResponse response = modelMapperService.forResponse().map(savedProduct,GetProductResponse.class);
+        product.setProductId(id);
+        productRepository.save(product);
+        GetProductResponse response = modelMapperService.forResponse().map(product,GetProductResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        productBusinessRules.checkIfProductExistById(id);
+        productBusinessRules.checkIfProductNotExistById(id);
         productRepository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

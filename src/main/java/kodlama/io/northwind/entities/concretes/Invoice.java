@@ -24,6 +24,6 @@ public class Invoice {
 
     @OneToOne
     @JoinColumn(name="order_details_id",referencedColumnName = "order_details_id")
-    private OrderDetail orderDetail;
+    private OrderDetail orderDetails;
 }
 

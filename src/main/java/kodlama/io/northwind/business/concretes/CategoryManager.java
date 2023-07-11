@@ -63,17 +63,18 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public DataResult<GetCategoryResponse> update(UpdateCategoryRequest request, int id) {
-        rules.CategoryExistsWithSameId(id);
+        rules.CategoryNotExistsWithSameId(id);
         Category category = modelMapperService.forRequest().map(request,Category.class);
-        Category savedCategory = categoryRepository.save(category);
-        GetCategoryResponse response = modelMapperService.forResponse().map(savedCategory,GetCategoryResponse.class);
+        category.setCategoryId(id);
+        categoryRepository.save(category);
+        GetCategoryResponse response = modelMapperService.forResponse().map(category,GetCategoryResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        rules.CategoryExistsWithSameId(id);
+        rules.CategoryNotExistsWithSameId(id);
         categoryRepository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

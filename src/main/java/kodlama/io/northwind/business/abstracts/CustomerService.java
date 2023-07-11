@@ -18,6 +18,6 @@ public interface CustomerService {
     DataResult<GetCustomerResponse> addCustomer(CreateCustomerRequest createCustomerRequest);
     DataResult<GetCustomerResponse> getById(String id);
     DataResult<Customer> getByCustomerId(String id);
-    DataResult<GetCustomerResponse> update(UpdateCustomerRequest request, int id);
-    Result delete(int id);
+    DataResult<GetCustomerResponse> update(UpdateCustomerRequest request, String id);
+    Result delete(String id);
 }

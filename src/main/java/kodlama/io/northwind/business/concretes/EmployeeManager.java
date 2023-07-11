@@ -50,17 +50,18 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public DataResult<GetEmployeeResponse> update(UpdateEmployeeRequest request, int id) {
-        employeeBusinessRules.checkIfEmployeeExistById(id);
+        employeeBusinessRules.checkIfEmployeeNotExistById(id);
         Employee employee = modelMapperService.forRequest().map(request,Employee.class);
-        Employee savedEmployee = employeeRepository.save(employee);
-        GetEmployeeResponse response = modelMapperService.forResponse().map(savedEmployee,GetEmployeeResponse.class);
+        employee.setEmployeeId(id);
+        employeeRepository.save(employee);
+        GetEmployeeResponse response = modelMapperService.forResponse().map(employee,GetEmployeeResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
     }
 
     @Override
     public Result delete(int id) {
-        employeeBusinessRules.checkIfEmployeeExistById(id);
+        employeeBusinessRules.checkIfEmployeeNotExistById(id);
         employeeRepository.deleteById(id);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));

@@ -70,10 +70,11 @@ public class AddressManager implements AddressService {
 
     @Override
     public DataResult<GetAddressResponse> update(UpdateAddressRequest request, int id) {
-        addressBusinessRules.checkIfAddressExistById(id);
+        addressBusinessRules.checkIfAddressNotExistById(id);
         Address address = modelMapperService.forRequest().map(request,Address.class);
-        Address savedAddress = addressRepository.save(address);
-        GetAddressResponse response = modelMapperService.forResponse().map(savedAddress,GetAddressResponse.class);
+        address.setAddressId(id);
+        addressRepository.save(address);
+        GetAddressResponse response = modelMapperService.forResponse().map(address,GetAddressResponse.class);
 
         return new SuccessDataResult<>(response,messageService.getMessage(Messages.Data.dataUpdated));
 
@@ -81,7 +82,7 @@ public class AddressManager implements AddressService {
 
     @Override
     public Result delete(int id) {
-        addressBusinessRules.checkIfAddressExistById(id);
+        addressBusinessRules.checkIfAddressNotExistById(id);
         addressRepository.deleteById(id);
 
         return new SuccessResult(Messages.Data.dataDeleted);

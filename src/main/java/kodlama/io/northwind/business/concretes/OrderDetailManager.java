@@ -53,9 +53,11 @@ public class OrderDetailManager implements OrderDetailService {
 
     @Override
     public Result delete(int id) {
-        orderDetailBusinessRules.checkIfOrderDetailExistById(id);
-        invoiceService.delete(id);
-        repository.deleteById(id);
+        orderDetailBusinessRules.checkIfOrderDetailNotExistById(id);
+        OrderDetail orderDetail = repository.findAllOrderDetailByOrderOrderId(id);
+        int orderDetailId = orderDetail.getId();
+        invoiceService.delete(orderDetailId);
+        repository.deleteById(orderDetailId);
 
         return new SuccessResult(messageService.getMessage(Messages.Data.dataDeleted));
     }

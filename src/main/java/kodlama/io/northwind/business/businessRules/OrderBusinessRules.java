@@ -13,10 +13,10 @@ public class OrderBusinessRules {
     private OrderRepository orderRepository;
     private MessageService messageService;
 
-    public void checkIfOrderExistById(int id){
+    public void checkIfOrderNotExistById(int id){
         boolean isExists = orderRepository.existsOrderByOrderId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Order.OrderExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Order.OrderNotExistsWithSameId));
         }
     }
 }

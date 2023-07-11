@@ -13,10 +13,10 @@ public class CityBusinessRules {
     private CityRepository cityRepository;
     private MessageService messageService;
 
-    public void checkIfCityExistById(int id){
+    public void checkIfCityNotExistById(int id){
         boolean isExists = cityRepository.existsCityBycityId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.City.CityExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.City.CityNotExistsWithSameId));
         }
     }
 }

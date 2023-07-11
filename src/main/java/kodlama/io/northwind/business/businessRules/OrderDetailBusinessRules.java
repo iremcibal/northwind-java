@@ -1,6 +1,7 @@
 package kodlama.io.northwind.business.businessRules;
 
 import kodlama.io.northwind.business.constants.Messages;
+import kodlama.io.northwind.business.dtos.response.orderDetail.GetOrderDetailResponse;
 import kodlama.io.northwind.core.exception.InternalException;
 import kodlama.io.northwind.core.internationalization.MessageService;
 import kodlama.io.northwind.dataAccess.abstracts.OrderDetailRepository;
@@ -13,10 +14,10 @@ public class OrderDetailBusinessRules {
     private OrderDetailRepository orderDetailRepository;
     private MessageService messageService;
 
-    public void checkIfOrderDetailExistById(int id){
-        boolean isExists = orderDetailRepository.existsOrderDetailById(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.OrderDetail.OrderDetailExistsWithSameId));
+    public void checkIfOrderDetailNotExistById(int id){
+        boolean isExists = orderDetailRepository.existsOrderDetailByOrderOrderId(id);
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.OrderDetail.OrderDetailNotExistsWithSameId));
         }
     }
 }

@@ -17,10 +17,10 @@ public class AddressBusinessRules {
     @Autowired
     private MessageService messageService;
 
-    public void checkIfAddressExistById(int id){
+    public void checkIfAddressNotExistById(int id){
         boolean isExists = addressRepository.existsAddressByAddressId(id);
-        if(isExists){
-            throw new InternalException(messageService.getMessage(Messages.Address.AddressExistsWithSameId));
+        if(!isExists){
+            throw new InternalException(messageService.getMessage(Messages.Address.AddressNotExistsWithSameId));
         }
     }
 }

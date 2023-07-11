@@ -12,5 +12,5 @@ import java.util.Date;
 public class CreateInvoiceRequest {
     private String number;
     private Date createdDate;
-    private int orderDetailId;
+    private int orderDetailsId;
 }

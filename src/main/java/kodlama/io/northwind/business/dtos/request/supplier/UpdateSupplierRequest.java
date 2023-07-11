@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateSupplierRequest {
+    private int supplierId;
     private String companyName;
     private String contactName;
     private String contactTitle;

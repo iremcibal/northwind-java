@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListOrderDetailResponse {
-    private int id;
+    private int orderDetailsId;
     private double  unitPrice;
     private int quantity;
     private double discount;

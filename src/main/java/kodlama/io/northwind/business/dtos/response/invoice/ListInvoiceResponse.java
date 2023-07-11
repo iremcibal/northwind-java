@@ -15,6 +15,6 @@ public class ListInvoiceResponse {
     private int invoiceId;
     private String number;
     private Date createdDate;
-    private int orderDetailId;
+    private int orderDetailsId;
 
 }
